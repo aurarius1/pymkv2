@@ -8,7 +8,7 @@ Below are some basic examples of how the :class:`~pymkv.MKVTrack` objects can be
 Create a new :class:`~pymkv.MKVTrack` from a track file. This example takes a standalone track file and uses it in an
 :class:`~pymkv.MKVTrack`.
 
->>> from pymkv import MKVTrack
+>>> from pymkv2 import MKVTrack
 >>> track1 = MKVTrack('path/to/track.h264')
 >>> track1.track_name = 'Some Name'
 >>> track1.language = 'eng'
@@ -27,7 +27,7 @@ prevent any global tags from being included if the :class:`~pymkv.MKVTrack` is m
 
 Now all these tracks can be added to an :class:`~pymkv.MKVFile` object and muxed together.
 
->>> from pymkv import MKVFile
+>>> from pymkv2 import MKVFile
 >>> file = MKVFile()
 >>> file.add_track(track1)
 >>> file.add_track(track2)
@@ -39,16 +39,16 @@ import json
 from os.path import expanduser, isfile
 import subprocess as sp
 
-from pymkv.Verifications import verify_supported
-from pymkv.ISO639_2 import is_ISO639_2
+from pymkv2.Verifications import verify_supported
+from pymkv2.ISO639_2 import is_ISO639_2
 
 
 class MKVTrack:
-    """A class that represents a track for an :class:`~pymkv.MKVFile` object.
+    """A class that represents a track for an :class:`~pymkv2.MKVFile` object.
 
-    :class:`~pymkv.MKVTrack` objects are video, audio, or subtitles. Tracks can be standalone files or a single track
-    within an MKV file, both can be handled by pymkv. An :class:`~pymkv.MKVTrack` object can be added to an
-    :class:`~pymkv.MKVFile` and will be included when the MKV is muxed.
+    :class:`~pymkv2.MKVTrack` objects are video, audio, or subtitles. Tracks can be standalone files or a single track
+    within an MKV file, both can be handled by pymkv2. An :class:`~pymkv2.MKVTrack` object can be added to an
+    :class:`~pymkv2.MKVFile` and will be included when the MKV is muxed.
 
     Parameters
     ----------
@@ -71,7 +71,7 @@ class MKVTrack:
     Attributes
     ----------
     mkvmerge_path : str
-        The path where pymkv looks for the mkvmerge executable. pymkv relies on the mkvmerge executable to parse
+        The path where pymkv2 looks for the mkvmerge executable. pymkv2 relies on the mkvmerge executable to parse
         files. By default, it is assumed mkvmerge is in your shell's $PATH variable. If it is not, you need to set
         *mkvmerge_path* to the executable location.
     track_name : str
@@ -81,20 +81,20 @@ class MKVTrack:
     forced_track : bool
         Determines if the track should be a forced track when muxed into an MKV file.
     no_chapters : bool
-        If chapters exist in the track file, don't include them when this :class:`~pymkv.MKVTrack` object is a track
-        in an :class:`~pymkv.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
+        If chapters exist in the track file, don't include them when this :class:`~pymkv2.MKVTrack` object is a track
+        in an :class:`~pymkv2.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
         that are already part of an MKV file.
     no_global_tags : bool
-        If global tags exist in the track file, don't include them when this :class:`~pymkv.MKVTrack` object is a track
-        in an :class:`~pymkv.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
+        If global tags exist in the track file, don't include them when this :class:`~pymkv2.MKVTrack` object is a track
+        in an :class:`~pymkv2.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
         that are already part of an MKV file.
     no_track_tags : bool
         If track tags exist in the specified track within the track file, don't include them when this
-        :class:`~pymkv.MKVTrack` object is a track in an :class:`~pymkv.MKVFile` mux operation. This option has no
+        :class:`~pymkv2.MKVTrack` object is a track in an :class:`~pymkv2.MKVFile` mux operation. This option has no
         effect on standalone track files, only tracks that are already part of an MKV file.
     no_attachments : bool
-        If attachments exist in the track file, don't include them when this :class:`~pymkv.MKVTrack` object is a track
-        in an :class:`~pymkv.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
+        If attachments exist in the track file, don't include them when this :class:`~pymkv2.MKVTrack` object is a track
+        in an :class:`~pymkv2.MKVFile` mux operation. This option has no effect on standalone track files, only tracks
         that are already part of an MKV file.
     """
 

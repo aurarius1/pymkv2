@@ -6,7 +6,7 @@ Below are some basic examples of how the :class:`~pymkv.MKVFile` objects can be 
 
 Create and mux a new MKV. This example takes an standalone video and audio track and combines them into an MKV file.
 
->>> from pymkv import MKVFile
+>>> from pymkv2 import MKVFile
 >>> mkv = MKVFile()
 >>> mkv.add_track('/path/to/track.h264')
 >>> mkv.add_track(MKVTrack('/path/to/another/track.aac'))
@@ -42,35 +42,35 @@ import subprocess as sp
 
 import bitmath
 
-from pymkv.MKVTrack import MKVTrack
-from pymkv.MKVAttachment import MKVAttachment
-from pymkv.Timestamp import Timestamp
-from pymkv.ISO639_2 import is_ISO639_2
-from pymkv.Verifications import verify_matroska, verify_mkvmerge
+from pymkv2.MKVTrack import MKVTrack
+from pymkv2.MKVAttachment import MKVAttachment
+from pymkv2.Timestamp import Timestamp
+from pymkv2.ISO639_2 import is_ISO639_2
+from pymkv2.Verifications import verify_matroska, verify_mkvmerge
 
 
 class MKVFile:
     """A class that represents an MKV file.
 
-    The :class:`~pymkv.MKVFile` class can either import a pre-existing MKV file or create a new one. After an
-    :class:`~pymkv.MKVFile` object has been instantiated, :class:`~pymkv.MKVTrack` objects or other
-    :class:`~pymkv.MKVFile` objects can be added using :meth:`~pymkv.MKVFile.add_track` and
-    :meth:`~pymkv.MKVFile.add_file` respectively.
+    The :class:`~pymkv2.MKVFile` class can either import a pre-existing MKV file or create a new one. After an
+    :class:`~pymkv2.MKVFile` object has been instantiated, :class:`~pymkv2.MKVTrack` objects or other
+    :class:`~pymkv2.MKVFile` objects can be added using :meth:`~pymkv2.MKVFile.add_track` and
+    :meth:`~pymkv2.MKVFile.add_file` respectively.
 
     Tracks are always added in the same order that they exist in a file or are added in. They can be reordered
-    using :meth:`~pymkv.MKVFile.move_track_front`, :meth:`~pymkv.MKVFile.move_track_end`,
-    :meth:`~pymkv.MKVFile.move_track_forward`, :meth:`~pymkv.MKVFile.move_track_backward`,
-    or :meth:`~pymkv.MKVFile.swap_tracks`.
+    using :meth:`~pymkv2.MKVFile.move_track_front`, :meth:`~pymkv2.MKVFile.move_track_end`,
+    :meth:`~pymkv2.MKVFile.move_track_forward`, :meth:`~pymkv2.MKVFile.move_track_backward`,
+    or :meth:`~pymkv2.MKVFile.swap_tracks`.
 
-    After an :class:`~pymkv.MKVFile` has been created, an mkvmerge command can be generated using
-    :meth:`~pymkv.MKVFile.command` or the file can be muxed using :meth:`~pymkv.MKVFile.mux`.
+    After an :class:`~pymkv2.MKVFile` has been created, an mkvmerge command can be generated using
+    :meth:`~pymkv2.MKVFile.command` or the file can be muxed using :meth:`~pymkv2.MKVFile.mux`.
 
     Parameters
     ----------
     file_path : str, optional
-        Path to a pre-existing MKV file. The file will be imported into the new :class:`~pymkv.MKVFile` object.
+        Path to a pre-existing MKV file. The file will be imported into the new :class:`~pymkv2.MKVFile` object.
     title : str, optional
-        The internal title given to the :class:`~pymkv.MKVFile`. If `title` is not specified, the title of the
+        The internal title given to the :class:`~pymkv2.MKVFile`. If `title` is not specified, the title of the
         pre-existing file will be used if it exists.
 
     Raises
@@ -120,7 +120,7 @@ class MKVFile:
 
     @property
     def chapter_language(self):
-        """str: The language code of the chapters in the :class:`~pymkv.MKVFile` object.
+        """str: The language code of the chapters in the :class:`~pymkv2.MKVFile` object.
 
         Raises
         ------
@@ -136,7 +136,7 @@ class MKVFile:
         self._chapter_language = language
 
     def command(self, output_path, subprocess=False):
-        """Generates an mkvmerge command based on the configured :class:`~pymkv.MKVFile`.
+        """Generates an mkvmerge command based on the configured :class:`~pymkv2.MKVFile`.
 
         Parameters
         ----------
@@ -148,7 +148,7 @@ class MKVFile:
         Returns
         -------
         str, list of str
-            The full command to mux the :class:`~pymkv.MKVFile` as a string containing spaces. Will be returned as a
+            The full command to mux the :class:`~pymkv2.MKVFile` as a string containing spaces. Will be returned as a
             list of strings with no spaces if `subprocess` is True.
         """
 
@@ -241,7 +241,7 @@ class MKVFile:
         return " ".join(command)
 
     def mux(self, output_path, silent=False):
-        """Muxes the specified :class:`~pymkv.MKVFile`.
+        """Muxes the specified :class:`~pymkv2.MKVFile`.
 
         Parameters
         ----------
@@ -267,17 +267,17 @@ class MKVFile:
             sp.run(self.command(output_path, subprocess=True), check=True, capture_output=True)
 
     def add_file(self, file):
-        """Add an MKV file into the :class:`~pymkv.MKVFile` object.
+        """Add an MKV file into the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
-        file : str, :class:`~pymkv.MKVFile`
-            The file to be combined with the :class:`~pymkv.MKVFile` object.
+        file : str, :class:`~pymkv2.MKVFile`
+            The file to be combined with the :class:`~pymkv2.MKVFile` object.
 
         Raises
         ------
         TypeError
-            Raised if if `file` is not a string-like path to an MKV file or an :class:`~pymkv.MKVFile` object.
+            Raised if if `file` is not a string-like path to an MKV file or an :class:`~pymkv2.MKVFile` object.
         """
         if isinstance(file, str):
             self.tracks = self.tracks + MKVFile(file).tracks
@@ -287,17 +287,17 @@ class MKVFile:
             raise TypeError('track is not str or MKVFile')
 
     def add_track(self, track):
-        """Add a track to the :class:`~pymkv.MKVFile`.
+        """Add a track to the :class:`~pymkv2.MKVFile`.
 
         Parameters
         ----------
-        track : str, :class:`~pymkv.MKVTrack`
-            The track to be added to the :class:`~pymkv.MKVFile` object.
+        track : str, :class:`~pymkv2.MKVTrack`
+            The track to be added to the :class:`~pymkv2.MKVFile` object.
 
         Raises
         ------
         TypeError
-            Raised if `track` is not a string-like path to a track file or an :class:`~pymkv.MKVTrack`.
+            Raised if `track` is not a string-like path to a track file or an :class:`~pymkv2.MKVTrack`.
         """
         if isinstance(track, str):
             self.tracks.append(MKVTrack(track))
@@ -307,17 +307,17 @@ class MKVFile:
             raise TypeError('track is not str or MKVTrack')
 
     def add_attachment(self, attachment):
-        """Add an attachment to the :class:`~pymkv.MKVFile`.
+        """Add an attachment to the :class:`~pymkv2.MKVFile`.
 
         Parameters
         ----------
-        attachment : str, :class:`~pymkv.MKVAttachment`
-            The attachment to be added to the :class:`~pymkv.MKVFile` object.
+        attachment : str, :class:`~pymkv2.MKVAttachment`
+            The attachment to be added to the :class:`~pymkv2.MKVFile` object.
 
         Raises
         ------
         TypeError
-            Raised if if `attachment` is not a string-like path to an attachment file or an :class:`~pymkv.MKVAttachment`.
+            Raised if if `attachment` is not a string-like path to an attachment file or an :class:`~pymkv2.MKVAttachment`.
         """
         if isinstance(attachment, str):
             self.attachments.append(MKVAttachment(attachment))
@@ -327,26 +327,26 @@ class MKVFile:
             raise TypeError('attachment is not str of MKVAttachment')
 
     def get_track(self, track_num=None):
-        """Get a :class:`~pymkv.MKVTrack` from the :class:`~pymkv.MKVFile` object.
+        """Get a :class:`~pymkv2.MKVTrack` from the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
         track_num : int, optional
-            Index of track to retrieve. Will return list of :class:`~pymkv.MKVTrack` objects if argument is not
+            Index of track to retrieve. Will return list of :class:`~pymkv2.MKVTrack` objects if argument is not
             provided.
 
         Returns
         -------
-        :class:`~pymkv.MKVTrack`, list of :class:`~pymkv.MKVTrack`
-            A list of all :class:`~pymkv.MKVTrack` objects in an :class:`~pymkv.MKVFile`. Returns a specific
-            :class:`~pymkv.MKVTrack` if `track_num` is specified.
+        :class:`~pymkv2.MKVTrack`, list of :class:`~pymkv2.MKVTrack`
+            A list of all :class:`~pymkv2.MKVTrack` objects in an :class:`~pymkv2.MKVFile`. Returns a specific
+            :class:`~pymkv2.MKVTrack` if `track_num` is specified.
         """
         if track_num is None:
             return self.tracks
         return self.tracks[track_num]
 
     def move_track_front(self, track_num):
-        """Set a track as the first in the :class:`~pymkv.MKVFile` object.
+        """Set a track as the first in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -364,7 +364,7 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def move_track_end(self, track_num):
-        """Set as track as the last in the :class:`~pymkv.MKVFile` object.
+        """Set as track as the last in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -382,7 +382,7 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def move_track_forward(self, track_num):
-        """Move a track forward in the :class:`~pymkv.MKVFile` object.
+        """Move a track forward in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -400,7 +400,7 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def move_track_backward(self, track_num):
-        """Move a track backward in the :class:`~pymkv.MKVFile` object.
+        """Move a track backward in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -418,7 +418,7 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def swap_tracks(self, track_num_1, track_num_2):
-        """Swap the position of two tracks in the :class:`~pymkv.MKVFile` object.
+        """Swap the position of two tracks in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -438,14 +438,14 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def replace_track(self, track_num, track):
-        """Replace a track with another track in the :class:`~pymkv.MKVFile` object.
+        """Replace a track with another track in the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
         track_num : int
             The track number of the track to replace.
         track : :class:`~pymkv.MKVTrack`
-            The :class:`~pymkv.MKVTrack` to be replaced into the file.
+            The :class:`~pymkv2.MKVTrack` to be replaced into the file.
 
         Raises
         ------
@@ -458,7 +458,7 @@ class MKVFile:
             raise IndexError('track index out of range')
 
     def remove_track(self, track_num):
-        """Remove a track from the :class:`~pymkv.MKVFile` object.
+        """Remove a track from the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
@@ -797,12 +797,12 @@ class MKVFile:
         self._link_to_next_file = None
 
     def chapters(self, file_path, language=None):
-        """Add a chapters file to the :class:`~pymkv.MKVFile` object.
+        """Add a chapters file to the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
         file_path : str
-            The chapters file to be added to the :class:`~pymkv.MKVFile` object.
+            The chapters file to be added to the :class:`~pymkv2.MKVFile` object.
         language : str, optional
             Must be an ISO639-2 language code. Only applied if no existing language information exists in chapters.
 
@@ -822,12 +822,12 @@ class MKVFile:
         self.chapter_language = language
 
     def global_tags(self, file_path):
-        """Add global tags to the :class:`~pymkv.MKVFile` object.
+        """Add global tags to the :class:`~pymkv2.MKVFile` object.
 
         Parameters
         ----------
         file_path : str
-            The tags file to be added to the :class:`~pymkv.MKVFile` object.
+            The tags file to be added to the :class:`~pymkv2.MKVFile` object.
 
         Raises
         ------
@@ -877,22 +877,22 @@ class MKVFile:
             self.tracks[tid].no_track_tags = True
 
     def no_chapters(self):
-        """Ignore the existing chapters of the :class:`~pymkv.MKVFile` object."""
+        """Ignore the existing chapters of the :class:`~pymkv2.MKVFile` object."""
         for track in self.tracks:
             track.no_chapters = True
 
     def no_global_tags(self):
-        """Ignore the existing global tags of the :class:`~pymkv.MKVFile` object."""
+        """Ignore the existing global tags of the :class:`~pymkv2.MKVFile` object."""
         for track in self.tracks:
             track.no_global_tags = True
 
     def no_track_tags(self):
-        """Ignore the existing track tags of the :class:`~pymkv.MKVFile` object."""
+        """Ignore the existing track tags of the :class:`~pymkv2.MKVFile` object."""
         for track in self.tracks:
             track.no_track_tags = True
 
     def no_attachments(self):
-        """Ignore the existing attachments of the :class:`~pymkv.MKVFile` object."""
+        """Ignore the existing attachments of the :class:`~pymkv2.MKVFile` object."""
         for track in self.tracks:
             track.no_attachments = True
 

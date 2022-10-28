@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'pymkv'
+project = 'pymkv2'
 copyright = '2020, Sheldon Woodward'
 author = 'Sheldon Woodward'
 

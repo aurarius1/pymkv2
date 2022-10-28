@@ -22,7 +22,7 @@ install_requires = [
 
 
 setup(
-    name='pymkv',
+    name='pymkv2',
     description='A Python wrapper for mkvmerge. It provides support for muxing, splitting, linking, chapters, tags, '
                 'and attachments through the use of mkvmerge.',
     long_description=long_description,
@@ -30,7 +30,7 @@ setup(
     author='Sheldon Woodward',
     author_email='me@sheldonw.com',
     license='MIT',
-    packages=['pymkv'],
+    packages=['pymkv2'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',

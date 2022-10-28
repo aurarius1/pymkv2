@@ -7,13 +7,13 @@ Below are some basic examples of how the :class:`~pymkv.MKVAttachment` objects c
 
 Create a new :class:`~pymkv.MKVAttachment` and add it to an :class:`~pymkv.MKVFile`.
 
->>> from pymkv import MKVAttachment
+>>> from pymkv2 import MKVAttachment
 >>> attachment = MKVAttachment('path/to/attachment.jpg', name='NAME')
 >>> attachment.description = 'DESCRIPTION'
 
 Attachments can also be added directly to an :class:`~pymkv.MKVFile`.
 
->>> from pymkv import MKVFile
+>>> from pymkv2 import MKVFile
 >>> mkv = MKVFile('path/to/file.mkv')
 >>> mkv.add_attachment('path/to/other/attachment.png')
 
@@ -28,7 +28,7 @@ from mimetypes import guess_type
 
 
 class MKVAttachment:
-    """A class that represents an MKV attachment for an :class:`~pymkv.MKVFile` object.
+    """A class that represents an MKV attachment for an :class:`~pymkv2.MKVFile` object.
 
     Parameters
     ----------
@@ -45,7 +45,7 @@ class MKVAttachment:
     Attributes
     ----------
     mime_type : str
-        The attachment's MIME type. The type will be guessed when :attr:`~pymkv.MKVAttachment.file_path` is set.
+        The attachment's MIME type. The type will be guessed when :attr:`~pymkv2.MKVAttachment.file_path` is set.
     name : str
         The name that will be given to the attachment when muxed into a file.
     description : str
