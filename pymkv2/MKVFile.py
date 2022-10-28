@@ -110,6 +110,8 @@ class MKVFile:
                     new_track.default_track = track['properties']['default_track']
                 if 'forced_track' in track['properties']:
                     new_track.forced_track = track['properties']['forced_track']
+                if "codec_id" in track['properties']:
+                    new_track.codec_id = track['properties']['codec_id']
                 self.add_track(new_track)
 
         # split options
