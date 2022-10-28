@@ -234,10 +234,29 @@ class MKVTrack:
         """str: The type of track such as video or audio."""
         return self._track_type
 
-    # TODO audio/video track extraction support
+    def track_file_types(self):
+        if self.codec_id == "S_TEXT/UTF8":
+            return ".srt"
+        elif self.codec_id == "S_TEXT/SSA":
+            return ".ssa"
+        elif self.codec_id == "S_TEXT/ASS":
+            return ".ass"
+        elif self.codec_id == "S_KATE":
+            return ".ogg"
+        elif self.codec_id == "S_VOBSUB":
+            return ".idx"
+        elif self.codec_id == "S_TEXT/USF":
+            return ".usf"
+        elif self.codec_id == "S_HDMV/PG":
+            return ".sup"
+        else:
+            # TODO exception here
+            return ""
+
     def extract(self, output_path=None, silent=False):
+        """when output_path is set, it is assumed, that you know the file ending of the extracted track"""
         if output_path is None:
-            output_path = splitext(self.file_path)[0] + f"_track{self.track_id:03d}_[{self.language}]"
+            output_path = splitext(self.file_path)[0] + f"_track_{self.track_id}" + self.track_file_types()
         else:
             output_path = expanduser(output_path)
         command = [self.mkvextract_path, 'tracks', f"{self.file_path}", f"{self.track_id}:{output_path}"]
