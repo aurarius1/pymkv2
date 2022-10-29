@@ -36,7 +36,7 @@ Now all these tracks can be added to an :class:`~pymkv.MKVFile` object and muxed
 """
 
 import json
-from os.path import expanduser, isfile, splitext
+from os.path import expanduser, isfile, splitext, split, dirname, isdir
 import subprocess as sp
 
 from pymkv2.Verifications import verify_supported
@@ -254,11 +254,16 @@ class MKVTrack:
             return ""
 
     def extract(self, output_path=None, silent=False):
-        """when output_path is set, it is assumed, that you know the file ending of the extracted track"""
+        """output_path should only be a path where the track should be extracted into"""
         if output_path is None:
-            output_path = splitext(self.file_path)[0] + f"_track_{self.track_id}" + self.track_file_types()
+            output_path = splitext(self.file_path)[0] + f"_track{self.track_id}_[{self.language}]" + self.track_file_types()
         else:
             output_path = expanduser(output_path)
+            output_path = dirname(output_path)
+            _, file = split(self.file_path)[1]
+            file, _ = splitext(file)
+            output_path += f"{file}_track{self.track_id}_[{self.language}]" + self.track_file_types()
+
         command = [self.mkvextract_path, 'tracks', f"{self.file_path}", f"{self.track_id}:{output_path}"]
         if silent:
             sp.run(command, stdout=open(devnull, 'wb'), check=True)
