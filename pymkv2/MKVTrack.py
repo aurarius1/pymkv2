@@ -247,7 +247,7 @@ class MKVTrack:
             return ".idx"
         elif self.codec_id == "S_TEXT/USF":
             return ".usf"
-        elif self.codec_id == "S_HDMV/PG":
+        elif self.codec_id == "S_HDMV/PGS":
             return ".sup"
         else:
             # TODO exception here
