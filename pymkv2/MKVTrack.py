@@ -270,5 +270,6 @@ class MKVTrack:
         else:
             print('Running with command:\n"' + " ".join(command) + '"')
             sp.run(command, check=True, capture_output=True)
+        return output_path
 
 
